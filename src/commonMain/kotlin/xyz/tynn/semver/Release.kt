@@ -6,13 +6,13 @@ package xyz.tynn.semver
 /**
  * Whether or not this semantic version is a pre release version
  */
-val SemVer.isPreRelease
+public val SemVer.isPreRelease: Boolean
     get() = preRelease.isNotEmpty()
 
 /**
  * Whether or not this semantic version is a release version
  */
-val SemVer.isRelease
+public val SemVer.isRelease: Boolean
     get() = preRelease.isEmpty()
 
 /**
@@ -22,7 +22,7 @@ val SemVer.isRelease
  * The [SemVer.minor] and [SemVer.patch] versions is `0`.
  * The [SemVer.preRelease] and [SemVer.build] meta data is removed.
  */
-fun SemVer.newMajorRelease() = SemVer(
+public fun SemVer.newMajorRelease(): SemVer = SemVer(
     major = major + 1,
     minor = 0,
     patch = 0,
@@ -35,7 +35,7 @@ fun SemVer.newMajorRelease() = SemVer(
  * The [SemVer.patch] versions is 0.
  * The [SemVer.preRelease] and [SemVer.build] meta data is removed.
  */
-fun SemVer.newMinorRelease() = SemVer(
+public fun SemVer.newMinorRelease(): SemVer = SemVer(
     major = major,
     minor = minor + 1,
     patch = 0,
@@ -47,7 +47,7 @@ fun SemVer.newMinorRelease() = SemVer(
  * The [SemVer.patch] version is incremented.
  * The [SemVer.preRelease] and [SemVer.build] meta data is removed.
  */
-fun SemVer.newPatchRelease() = SemVer(
+public fun SemVer.newPatchRelease(): SemVer = SemVer(
     major = major,
     minor = minor,
     patch = patch + 1,
@@ -59,9 +59,9 @@ fun SemVer.newPatchRelease() = SemVer(
  * The [SemVer.preRelease] version is replaced with [preRelease].
  * The [SemVer.build] meta data is removed.
  */
-fun SemVer.newPreRelease(
-    preRelease: List<String>
-) = newPreRelease {
+public fun SemVer.newPreRelease(
+    preRelease: List<String>,
+): SemVer = newPreRelease {
     preRelease
 }
 
@@ -71,9 +71,9 @@ fun SemVer.newPreRelease(
  * The [SemVer.preRelease] version is replaced with the result of [update].
  * The [SemVer.build] meta data is removed.
  */
-inline fun SemVer.newPreRelease(
-    crossinline update: List<String>.() -> List<String>
-) = SemVer(
+public inline fun SemVer.newPreRelease(
+    crossinline update: List<String>.() -> List<String>,
+): SemVer = SemVer(
     major = major,
     minor = minor,
     patch = patch,
@@ -85,7 +85,7 @@ inline fun SemVer.newPreRelease(
  *
  * The [SemVer.preRelease] and [SemVer.build] meta data is removed.
  */
-fun SemVer.newRelease() = SemVer(
+public fun SemVer.newRelease(): SemVer = SemVer(
     major = major,
     minor = minor,
     patch = patch,

@@ -5,7 +5,7 @@ package xyz.tynn.semver
 
 import kotlin.test.*
 
-class SemVerTests {
+internal class SemVerTests {
 
     val releaseVersionString = "$major.$minor.$patch"
     val preReleaseVersionString = "$major.$minor.$patch-${
@@ -16,7 +16,7 @@ class SemVerTests {
     }"
     val versionString = buildVersionString.replace(
         releaseVersionString,
-        preReleaseVersionString
+        preReleaseVersionString,
     )
 
     @Test
@@ -27,7 +27,7 @@ class SemVerTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ),
             versionString.toSemVer()
         )
@@ -37,7 +37,7 @@ class SemVerTests {
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ),
             buildVersionString.toSemVer()
         )
@@ -47,7 +47,7 @@ class SemVerTests {
                 minor,
                 patch,
                 preRelease,
-                listOf()
+                listOf(),
             ),
             preReleaseVersionString.toSemVer()
         )
@@ -55,7 +55,7 @@ class SemVerTests {
             SemVer(
                 major,
                 minor,
-                patch
+                patch,
             ),
             releaseVersionString.toSemVer()
         )
@@ -69,14 +69,14 @@ class SemVerTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease.toList(),
-                build.toList()
+                build.toList(),
             )
         )
     }
@@ -87,7 +87,7 @@ class SemVerTests {
 
         assertEquals(
             Triple(1L, 2L, 3L),
-            Triple(major, minor, patch)
+            Triple(major, minor, patch),
         )
     }
 
@@ -122,7 +122,7 @@ class SemVerTests {
         }
         assertEquals(
             0,
-            "1.2.3+a".toSemVer().compareTo("1.2.3+b".toSemVer())
+            "1.2.3+a".toSemVer().compareTo("1.2.3+b".toSemVer()),
         )
         assertTrue {
             "1.2.3+a".toSemVer() <= "1.2.3+b".toSemVer()
@@ -147,7 +147,7 @@ class SemVerTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).toString()
         )
         assertEquals(
@@ -157,7 +157,7 @@ class SemVerTests {
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ).toString()
         )
         assertEquals(
@@ -167,7 +167,7 @@ class SemVerTests {
                 minor,
                 patch,
                 preRelease,
-                listOf()
+                listOf(),
             ).toString()
         )
         assertEquals(
@@ -175,7 +175,7 @@ class SemVerTests {
             SemVer(
                 major,
                 minor,
-                patch
+                patch,
             ).toString()
         )
     }

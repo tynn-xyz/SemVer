@@ -11,7 +11,7 @@ private fun String.throwInvalidSemVer(): Nothing =
 /**
  * Parses a string as a semantic version or throws an [IllegalArgumentException]
  */
-fun String.toSemVer() = semVerPattern.matchEntire(this)?.run {
+public fun String.toSemVer(): SemVer = semVerPattern.matchEntire(this)?.run {
     val (_, major, minor, patch) = groupValues
     SemVer(
         major.toLong(),
@@ -42,19 +42,23 @@ fun String.toSemVer() = semVerPattern.matchEntire(this)?.run {
  *
  * @constructor validates the version or throws an [IllegalArgumentException]
  */
-class SemVer(
-    val major: Long,
-    val minor: Long,
-    val patch: Long,
-    val preRelease: List<String> = emptyList(),
-    val build: List<String> = emptyList(),
+public class SemVer(
+    public val major: Long,
+    public val minor: Long,
+    public val patch: Long,
+    public val preRelease: List<String> = emptyList(),
+    public val build: List<String> = emptyList(),
 ) : Comparable<SemVer> {
 
-    private val versionString = "$major.$minor.$patch${
-        "-".join(preRelease)
-    }${
-        "+".join(build)
-    }"
+    private val versionString = buildString {
+        append(major)
+        append('.')
+        append(minor)
+        append('.')
+        append(patch)
+        append(preRelease, "-")
+        append(build, "+")
+    }
 
     init {
         semVerPattern matches versionString || versionString.throwInvalidSemVer()
@@ -65,13 +69,15 @@ class SemVer(
     }
 
     /** The [major] version */
-    operator fun component1() = major
-    /** The [minor] version */
-    operator fun component2() = minor
-    /** The [patch] version */
-    operator fun component3() = patch
+    public operator fun component1(): Long = major
 
-    override fun toString() = versionString
+    /** The [minor] version */
+    public operator fun component2(): Long = minor
+
+    /** The [patch] version */
+    public operator fun component3(): Long = patch
+
+    override fun toString(): String = versionString
 
     override fun compareTo(other: SemVer): Int {
         if (this === other) return 0
@@ -86,9 +92,8 @@ class SemVer(
             preRelease.isEmpty() -> 1
             other.preRelease.isEmpty() -> -1
             else -> comparePreReleaseSegments(
-                0,
                 preReleaseSegment,
-                other.preReleaseSegment
+                other.preReleaseSegment,
             )
         }
     }
@@ -114,12 +119,12 @@ class SemVer(
     }
 
     private tailrec fun comparePreReleaseSegments(
-        i: Int,
         left: List<Pair<Boolean, String>>,
-        right: List<Pair<Boolean, String>>
+        right: List<Pair<Boolean, String>>,
+        index: Int = 0,
     ): Int {
-        val leftItem = left.getOrNull(i)
-        val rightItem = right.getOrNull(i)
+        val leftItem = left.getOrNull(index)
+        val rightItem = right.getOrNull(index)
         return when {
             leftItem == null && rightItem == null -> 0
             leftItem == null -> -1
@@ -131,13 +136,13 @@ class SemVer(
                 rightItem.second,
                 leftItem.first
             ).takeUnless { it == 0 }
-        } ?: comparePreReleaseSegments(i + 1, left, right)
+        } ?: comparePreReleaseSegments(left, right, index + 1)
     }
 
     private fun comparePreReleaseSegment(
         left: String,
         right: String,
-        isNumeric: Boolean
+        isNumeric: Boolean,
     ): Int = when {
         !isNumeric -> left.compareTo(right)
         left.length != right.length ->
@@ -145,14 +150,16 @@ class SemVer(
         else -> comparePreReleaseSegment(left, right, false)
     }
 
-    private fun String.join(
-        segments: List<String>
+    private fun StringBuilder.append(
+        segments: List<String>,
+        prefix: String,
     ) = segments.takeUnless {
         it.isEmpty()
-    }?.joinToString(
+    }?.joinTo(
+        buffer = this,
         separator = ".",
-        prefix = this
-    ) ?: ""
+        prefix = prefix
+    )
 }
 
 // https://regex101.com/r/vkijKf/1/

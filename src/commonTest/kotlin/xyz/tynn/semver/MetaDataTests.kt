@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class MetaDataTests {
+internal class MetaDataTests {
 
     @Test
     fun test_SemVer_hasBuildMetaData() {
@@ -18,7 +18,7 @@ class MetaDataTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).hasBuildMetaData
         }
         assertTrue {
@@ -27,7 +27,7 @@ class MetaDataTests {
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ).hasBuildMetaData
         }
         assertFalse {
@@ -36,7 +36,7 @@ class MetaDataTests {
                 minor,
                 patch,
                 preRelease,
-                listOf()
+                listOf(),
             ).hasBuildMetaData
         }
         assertFalse {
@@ -45,7 +45,7 @@ class MetaDataTests {
                 minor,
                 patch,
                 listOf(),
-                listOf()
+                listOf(),
             ).hasBuildMetaData
         }
     }
@@ -57,28 +57,28 @@ class MetaDataTests {
                 major,
                 minor,
                 patch,
-                preRelease
+                preRelease,
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).removeBuildMetaData()
         )
         assertEquals(
             SemVer(
                 major,
                 minor,
-                patch
+                patch,
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ).removeBuildMetaData()
         )
     }

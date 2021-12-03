@@ -3,17 +3,17 @@
 
 package xyz.tynn.semver
 
-val major = 1L
-val minor = 2L
-val patch = 3L
+const val major = 1L
+const val minor = 2L
+const val patch = 3L
 
 val preRelease = listOf(
     "foo-bar",
     "baz01",
-    "0"
+    "0",
 )
 val build = listOf(
     "foo-bar",
     "baz01",
-    "00"
+    "00",
 )

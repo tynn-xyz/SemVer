@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class ReleaseTests {
+internal class ReleaseTests {
 
     @Test
     fun test_SemVer_isPreRelease() {
@@ -18,7 +18,7 @@ class ReleaseTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).isPreRelease
         }
         assertFalse {
@@ -27,7 +27,7 @@ class ReleaseTests {
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ).isPreRelease
         }
     }
@@ -40,7 +40,7 @@ class ReleaseTests {
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).isRelease
         }
         assertTrue {
@@ -49,7 +49,7 @@ class ReleaseTests {
                 minor,
                 patch,
                 listOf(),
-                build
+                build,
             ).isRelease
         }
     }
@@ -62,14 +62,14 @@ class ReleaseTests {
                 0,
                 0,
                 listOf(),
-                listOf()
+                listOf(),
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).newMajorRelease()
         )
     }
@@ -82,14 +82,14 @@ class ReleaseTests {
                 minor + 1,
                 0,
                 listOf(),
-                listOf()
+                listOf(),
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).newMinorRelease()
         )
     }
@@ -102,14 +102,14 @@ class ReleaseTests {
                 minor,
                 patch + 1,
                 listOf(),
-                listOf()
+                listOf(),
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).newPatchRelease()
         )
     }
@@ -122,16 +122,16 @@ class ReleaseTests {
                 minor,
                 patch,
                 preRelease + "new01",
-                listOf()
+                listOf(),
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).newPreRelease(
-                preRelease + "new01"
+                preRelease + "new01",
             )
         )
     }
@@ -144,14 +144,14 @@ class ReleaseTests {
                 minor,
                 patch,
                 listOf(),
-                listOf()
+                listOf(),
             ),
             SemVer(
                 major,
                 minor,
                 patch,
                 preRelease,
-                build
+                build,
             ).newRelease()
         )
     }

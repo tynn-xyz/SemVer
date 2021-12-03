@@ -6,13 +6,13 @@ package xyz.tynn.semver
 /**
  * Whether or not this semantic version has build meta data
  */
-val SemVer.hasBuildMetaData
+public val SemVer.hasBuildMetaData: Boolean
     get() = build.isNotEmpty()
 
 /**
  * Creates a new semantic version without [SemVer.build] meta data
  */
-fun SemVer.removeBuildMetaData() = SemVer(
+public fun SemVer.removeBuildMetaData(): SemVer = SemVer(
     major = major,
     minor = minor,
     patch = patch,

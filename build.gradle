@@ -6,6 +6,8 @@ plugins {
 group = 'xyz.tynn.semver'
 
 kotlin {
+    explicitApi()
+
     ios()
     js {
         browser
