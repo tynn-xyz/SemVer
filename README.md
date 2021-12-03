@@ -1,5 +1,5 @@
 # SemVer
-[![Build][travis-shield]][travis]
+[![Build][build-shield]][build]
 
 _SemVer_ is a Kotlin Multiplatform implementation of
 [Semantic Versioning](https://semver.org).
@@ -37,5 +37,5 @@ natural ordering that is inconsistent with equals.
     limitations under the License.
 
 
-  [travis]: https://travis-ci.com/tynn-xyz/SemVer
-  [travis-shield]: https://travis-ci.com/tynn-xyz/SemVer.svg
+  [build]: https://github.com/tynn-xyz/SemVer/actions
+  [build-shield]: https://img.shields.io/github/workflow/status/tynn-xyz/SemVer/Build
