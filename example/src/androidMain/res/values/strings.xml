@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SemVer Demo Android</string>
+    <string name="button_alpha">alpha</string>
+    <string name="button_beta">beta</string>
+</resources>

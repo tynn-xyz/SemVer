@@ -9,3 +9,4 @@
 /gradlew*
 .externalNativeBuild
 .cxx
+kotlin-js-store

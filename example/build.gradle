@@ -1,0 +1,74 @@
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 31
+
+        versionCode 1
+        versionName "0.0.0"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
+            java.srcDirs += 'src/androidMain/java/'
+            res.srcDirs += 'src/androidMain/res/'
+        }
+    }
+}
+
+kotlin {
+    explicitApi()
+
+    android()
+
+    ios {
+        binaries {
+            framework {
+                baseName = "SemVerExampleKt"
+            }
+        }
+    }
+
+    js {
+        binaries.executable()
+        browser
+    }
+
+    jvm {
+        tasks.register('runJavaExecutableJvm', JavaExec) {
+            group = 'run'
+            dependsOn jvmJar
+            main = 'xyz.tynn.semver.example.MainCliKt'
+            classpath configurations.jvmRuntimeClasspath, jvmJar
+        }
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation project(':semver')
+                implementation kotlin('stdlib-common')
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation 'androidx.appcompat:appcompat:1.4.0'
+                implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+            }
+        }
+
+        jsMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlinx:kotlinx-html:0.7.3'
+            }
+        }
+    }
+}
